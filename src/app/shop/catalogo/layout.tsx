@@ -1,4 +1,4 @@
-// src/app/(shop)/catalogo/layout.tsx
+// src/app/shop/catalogo/layout.tsx
 import React from 'react'
 
 export default function CatalogoLayout({

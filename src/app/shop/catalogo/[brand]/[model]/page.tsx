@@ -1,4 +1,4 @@
-// src/app/(shop)/catalogo/[brand]/[model]/page.tsx
+// src/app/shop/catalogo/[brand]/[model]/page.tsx
 import WatchDetail from '@/components/sections/watch-detail'
 
 export default async function Page({ 

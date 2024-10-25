@@ -1,4 +1,4 @@
-// src/app/(shop)/layout.tsx
+// src/app/shop/layout.tsx
 import React from 'react'
 
 export default function ShopLayout({
