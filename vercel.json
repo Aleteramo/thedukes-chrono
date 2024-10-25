@@ -1,11 +1,28 @@
 {
+    "version": 2,
+    "buildCommand": "npm run build",
+    "installCommand": "npm install --legacy-peer-deps",
+    "framework": "nextjs",
     "builds": [
       {
-        "src": "package.json",
+        "src": "next.config.js",
         "use": "@vercel/next",
         "config": {
-          "installCommand": "npm install --legacy-peer-deps"
+          "skipBuildIdentifier": true,
+          "cleanDestinationDir": true
         }
       }
-    ]
+    ],
+    "build": {
+      "env": {
+        "NEXT_TELEMETRY_DISABLED": "1"
+      }
+    },
+    "git": {
+      "deploymentEnabled": {
+        "main": true
+      }
+    },
+    "ignoreCommand": "echo 'Ignoring build step'",
+    "cleanBuilds": true
   }

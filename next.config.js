@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  distDir: '.next',
+  cleanDistDir: true,
+  experimental: {
+    serverActions: true,
+    optimizeFonts: false
+  },
+  typescript: {
+    ignoreBuildErrors: true
+  },
   images: {
     domains: ['placehold.co'],
     remotePatterns: [
@@ -13,12 +22,6 @@ const nextConfig = {
         hostname: '**.placeholder.com',
       }
     ],
-  },
-  experimental: {
-    serverActions: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,  // Aggiungi questa riga
   }
 }
 
