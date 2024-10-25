@@ -1,10 +1,34 @@
 // src/components/sections/featured-watches/index.tsx
 "use client"
+import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
-const watches = [
+interface WatchSpecs {
+  size: string;
+  sku?: string;
+  movement: string;
+  model?: string;
+  gender: string;
+  period?: string;
+  material?: string;
+  strap?: string;
+}
+
+interface Watch {
+  id: number;
+  name: string;
+  brand: string;
+  ref?: string;
+  specs: WatchSpecs;
+  description: string;
+  imageUrl: string;
+  status: string;
+  price?: number | null;
+}
+
+const watches: Watch[] = [
   {
     id: 1,
     name: "Rolex Oyster Perpetual 36",
@@ -92,7 +116,7 @@ export default function WatchGallery() {
                     href="/contatti"
                     className="inline-block px-4 py-2 border border-white text-sm hover:bg-white hover:text-black transition-colors duration-200"
                   >
-                    {watch.}
+                    Contattaci
                   </Link>
                 </div>
               )}

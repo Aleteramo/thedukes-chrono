@@ -1,5 +1,4 @@
 // src/app/(shop)/catalogo/page.tsx
-import Image from 'next/image'
 import Link from 'next/link'
 
 interface Brand {

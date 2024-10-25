@@ -3,8 +3,23 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
+type Watches = {
+  [key: string]: {
+    id: string;
+    name: string;
+    status: string;
+    images: string[];
+    specs: {
+      ref?: string;
+      size: string;
+      movement: string;
+      period?: string;
+    }
+  }[]
+}
+
 // Questo sarà sostituito con dati reali dal database
-const watches = {
+const watches: Watches = {
   rolex: [
     {
       id: 'oyster-perpetual-36',
@@ -17,7 +32,6 @@ const watches = {
         movement: 'Automatico'
       }
     }
-    // Altri orologi...
   ],
   omega: [
     {
@@ -31,12 +45,17 @@ const watches = {
         movement: 'Carica manuale'
       }
     }
-    // Altri orologi...
   ]
 }
 
-export default function BrandPage({ params }: { params: { brand: string } }) {
-  const brandWatches = watches[params.brand as keyof typeof watches] || []
+export default async function BrandPage({ 
+  params 
+}: { 
+  params: Promise<{ brand: string }> 
+}) {
+  // Await the params
+  const { brand } = await params;
+  const brandWatches = watches[brand] || [];
 
   return (
     <div className="py-20 px-4">
@@ -45,12 +64,12 @@ export default function BrandPage({ params }: { params: { brand: string } }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        {params.brand}
+        {brand}
       </motion.h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {brandWatches.map((watch) => (
-          <Link href={`/catalogo/${params.brand}/${watch.id}`} key={watch.id}>
+          <Link href={`/catalogo/${brand}/${watch.id}`} key={watch.id}>
             <motion.div 
               className="group relative"
               initial={{ opacity: 0 }}

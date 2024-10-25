@@ -1,4 +1,6 @@
 // src/components/ui/footer/index.tsx
+import Link from 'next/link'
+
 const Footer = () => {
   return (
     <footer className="border-t border-gray-800">
@@ -19,28 +21,28 @@ const Footer = () => {
             <h4 className="font-bold mb-4">Collegamenti Rapidi</h4>
             <ul className="space-y-2">
               <li>
-                <a 
+                <Link 
                   href="/catalogo" 
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Catalogo
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
-                  href="/about" 
+                <Link 
+                  href="/chi-sono" 
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Chi Sono
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
+                <Link 
                   href="/servizi" 
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Servizi
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

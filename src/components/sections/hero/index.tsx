@@ -1,14 +1,14 @@
 // src/components/sections/hero/index.tsx
 "use client"
 import { useEffect, useRef, useState } from 'react'
-import { motion, useTransform, useSpring } from 'framer-motion'
+import { motion, useTransform, useSpring, useScroll } from 'framer-motion'
 
 interface MousePosition {
-  x: number
-  y: number
+  x: number;
+  y: number;
 }
 
-// Dati predefiniti per le particelle
+// Dati predefiniti per le particelle rimangono gli stessi
 const PARTICLES_DATA = [
   // Prima riga
   { x: 10, y: 10, size: 6, delay: 0, color: "#D4AF37" },
@@ -51,7 +51,16 @@ const PARTICLES_DATA = [
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll()
 
+  const springConfig = { stiffness: 100, damping: 30 }
+  const mouseXSpring = useSpring(0, springConfig)
+  const mouseYSpring = useSpring(0, springConfig)
+
+  // Crea un singolo transform per lo scroll
+  const scrollY = useTransform(scrollYProgress, [0, 1], [0, 300])
+
+  // Mouse effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
@@ -67,10 +76,6 @@ export default function Hero() {
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
-  const springConfig = { stiffness: 100, damping: 30 }
-  const mouseXSpring = useSpring(0, springConfig)
-  const mouseYSpring = useSpring(0, springConfig)
-
   useEffect(() => {
     mouseXSpring.set(mousePosition.x * 2 - 1)
     mouseYSpring.set(mousePosition.y * 2 - 1)
@@ -82,6 +87,7 @@ export default function Hero() {
       className="relative h-screen flex items-center justify-center overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      style={{ y: scrollY }}
     >
       <div className="absolute inset-0 bg-black">
         <motion.div
@@ -132,44 +138,34 @@ export default function Hero() {
         </svg>
 
         {/* Particelle */}
-        {PARTICLES_DATA.map((particle, i) => {
-          const x = useTransform(mouseXSpring, [-1, 1], [-20, 20])
-          const y = useTransform(mouseYSpring, [-1, 1], [-20, 20])
+        {PARTICLES_DATA.map((particle, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: particle.size + 'px',
+              height: particle.size + 'px',
+              background: particle.color,
+              filter: 'blur(0.5px) drop-shadow(0 0 2px rgba(212, 175, 55, 0.5))',
+            }}
+            animate={{
+              opacity: [0, 0.7, 0],
+              scale: [0, 1.2, 0],
+              x: [(i % 5) * 10, 0, (i % 5) * 10],
+              y: [(i % 3) * 10, 0, (i % 3) * 10],
+            }}
+            transition={{
+              duration: 4 + (i % 3),
+              repeat: Infinity,
+              delay: particle.delay,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
 
-          return (
-            <motion.div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                left: `${particle.x}%`,
-                top: `${particle.y}%`,
-                width: particle.size + 'px',
-                height: particle.size + 'px',
-                background: particle.color,
-                filter: 'blur(0.5px) drop-shadow(0 0 2px rgba(212, 175, 55, 0.5))',
-              }}
-              animate={{
-                x: [0, x.get(), 0],
-                y: [0, y.get(), 0],
-                opacity: [0, 0.7, 0],
-                scale: [0, 1.2, 0],
-                boxShadow: [
-                  '0 0 0 rgba(212, 175, 55, 0)',
-                  '0 0 15px rgba(212, 175, 55, 0.3)',
-                  '0 0 0 rgba(212, 175, 55, 0)'
-                ]
-              }}
-              transition={{
-                duration: 4 + (i % 3),
-                repeat: Infinity,
-                delay: particle.delay,
-                ease: "easeInOut",
-              }}
-            />
-          )
-        })}
-
-        {/* Blur overlay per profondità */}
+        {/* Blur overlay */}
         <div className="absolute inset-0 backdrop-blur-[0.3px] pointer-events-none" />
       </div>
 
@@ -184,8 +180,8 @@ export default function Hero() {
             translateY: useTransform(mouseYSpring, [-1, 1], [20, -20])
           }}
         >
-            The Dukes Chrono
-                </motion.h1>
+          The Dukes Chrono
+        </motion.h1>
         
         <motion.p
           className="text-gray-400 text-xl md:text-2xl max-w-2xl mx-auto"
