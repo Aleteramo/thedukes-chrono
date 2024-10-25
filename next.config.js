@@ -5,7 +5,9 @@ const nextConfig = {
   cleanDistDir: true,
   experimental: {
     serverActions: true,
-    optimizeFonts: false
+    optimizeFonts: true, // cambiato da false a true
+    typedRoutes: true,
+    serverComponentsExternalPackages: [],
   },
   typescript: {
     ignoreBuildErrors: true
@@ -22,6 +24,20 @@ const nextConfig = {
         hostname: '**.placeholder.com',
       }
     ],
+  },
+  // Aggiungi questa configurazione per i font
+  async headers() {
+    return [
+      {
+        source: '/fonts/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ]
   }
 }
 
