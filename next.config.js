@@ -2,7 +2,6 @@
 const nextConfig = {
   output: 'standalone',
   images: {
-    domains: ['placehold.co'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -15,10 +14,19 @@ const nextConfig = {
     ],
   },
   experimental: {
-    serverActions: true,
+    serverActions: {
+      enabled: true
+    }
   },
-  typescript: {
-    ignoreBuildErrors: true,  // Aggiungi questa riga
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/.well-known/vercel/microfrontend-routing',
+          destination: '/api/microfrontend-routing'
+        }
+      ]
+    }
   }
 }
 

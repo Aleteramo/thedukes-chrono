@@ -1,4 +1,4 @@
-// src/components/sections/hero/index.tsx
+// app/components/sections/hero/index.tsx
 "use client"
 import { useEffect, useRef, useState } from 'react'
 import { motion, useTransform, useSpring, useScroll } from 'framer-motion'

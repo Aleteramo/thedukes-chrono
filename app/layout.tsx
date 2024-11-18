@@ -1,33 +1,34 @@
-// src/app/layout.tsx
-import './globals.css'
-import { Inter, Playfair_Display } from 'next/font/google'
-import type { Metadata } from 'next'
-import Header from '@/components/ui/header'
-import CustomCursor from '@/components/ui/cursor'
-import SmoothScroll from '@/components/providers/smooth-scroll'
+// app/layout.tsx
+import React from 'react';
+import './globals.css';
+import { Inter, Playfair_Display } from 'next/font/google';
+import type { Metadata } from 'next';
+import Header from '@/components/ui/header';
+import CustomCursor from '@/components/ui/cursor';
+import SmoothScroll from '@/components/providers/smooth-scroll';
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter'
-})
+});
 
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-playfair'
-})
+});
 
 export const metadata: Metadata = {
   title: 'The Dukes Chrono | Orologi Vintage',
   description: 'Collezione esclusiva di orologi vintage selezionati con cura',
+};
+
+interface RootLayoutProps {
+  children: React.ReactNode;
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="it" className="dark">
       <body className={`${inter.variable} ${playfair.variable} font-sans bg-black text-white antialiased`}>
@@ -38,5 +39,5 @@ export default function RootLayout({
         </SmoothScroll>
       </body>
     </html>
-  )
+  );
 }
