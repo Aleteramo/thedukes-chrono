@@ -16,7 +16,8 @@ const nextConfig = {
   experimental: {
     serverActions: {
       enabled: true
-    }
+    },
+    serverComponentsExternalPackages: []
   },
   async rewrites() {
     return {
@@ -33,6 +34,13 @@ const nextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true
+  },
+  webpack: (config) => {
+    config.watchOptions = {
+      poll: 1000,
+      aggregateTimeout: 300,
+    }
+    return config
   }
 }
 
