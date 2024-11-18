@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  return NextResponse.json({
-    routes: [
-      '/contatti',
-      '/servizi',
-      '/catalogo',
-      '/chi-sono',
-      '/shop'
-    ]
-  });
+  const routes = [
+    { path: '/', label: 'Home' },
+    { path: '/catalogo', label: 'Catalogo' },
+    { path: '/contatti', label: 'Contatti' },
+    { path: '/servizi', label: 'Servizi' },
+    { path: '/chi-sono', label: 'Chi Sono' }
+  ];
+
+  return NextResponse.json(routes);
 }
